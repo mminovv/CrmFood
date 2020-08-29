@@ -5,7 +5,7 @@ urlpatterns = [
 	path('admin/', admin.site.urls),
 
 	#path("", include("service.urls")),
-	#path("", include("user.urls")),
+	path("", include("user.urls")),
 ]
 
 urlpatterns = [

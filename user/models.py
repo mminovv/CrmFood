@@ -1,7 +1,9 @@
 from datetime import datetime, timedelta
 
 from django.conf import settings
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import (AbstractBaseUser,
+                                        BaseUserManager,
+                                        PermissionsMixin) 
 
 from django.db import models
 from service.models import Roles 
@@ -11,7 +13,7 @@ import jwt
 
 class UserManager(BaseUserManager):
 
-    def create_user(self, username, email, password=None):
+    def create_user(self, username, email, password=None, *args, **kwargs):
         """Create and return a `User` with an email, username and password."""
         if username is None:
             raise TypeError('Users must have a username')
@@ -19,17 +21,26 @@ class UserManager(BaseUserManager):
         if email is None:
             raise TypeError('Users must have an email')
 
-        user = self.model(username=username, email=self.normalize_email(email))
+        user = self.model(
+            username=username,
+            email=self.normalize_email(email),
+            *args,
+            **kwargs)
         user.set_password(password)
         user.save(using=self._db)
 
         return user
 
-    def create_superuser(self, username, email, password, **kwargs):
+    def create_superuser(self, username, email, password, *args, **kwargs):
         if password is None:
             raise ValueError('Users must have password')
 
-        user = self.create_user(username=username,password=password,email=self.normalize_email(email))
+        user = self.create_user(
+            username=username,
+            password=password,
+            email=self.normalize_email(email),
+            *args,
+            **kwargs)
         user.is_superuser = True
         user.is_staff = True
         user.is_admin = True
@@ -38,10 +49,11 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    name = models.CharField(max_length=120, unique=True, default='Aziz')
+    name = models.CharField(max_length=120, unique=True)
     surname = models.CharField(max_length=120)
-    email = models.EmailField(max_length=120, unique=True)
+    
     password = models.CharField(max_length=120, blank=False)
+    email = models.EmailField(max_length=120, unique=True)
     #role = models.ForeignKey(Roles, on_delete=models.CASCADE, default='Admin')
     phone = models.CharField(max_length=50)
     date = models.DateTimeField(auto_now_add=True, null=True)
