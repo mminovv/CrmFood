@@ -19,7 +19,7 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 ALLOWED_HOSTS = []
 
 
-# Application definition
+# Application definition 
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -89,7 +89,7 @@ DATABASES = {
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'user.backends.JWTAuthentication',        
+        'user.backends.TokenAuthentication',        
         #'rest_framework.authentication.TokenAuthentication',
         #'rest_framework.authentication.SessionAuthentication',
         ),
@@ -108,9 +108,9 @@ REST_FRAMEWORK = {
 
 AUTH_USER_MODEL = 'user.User'
 
-SIMPLE_JWT = {
-   'AUTH_HEADER_TYPES': ('JWT',),
-}
+#SIMPLE_JWT = {
+#   'AUTH_HEADER_TYPES': ('JWT',),
+#}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

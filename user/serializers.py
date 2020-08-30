@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate 
-from .models import User
+from user.models import User
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -19,7 +19,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         fields = ['name', 'surname', 'phone', 'date', 'email', 'username', 'password', 'token']
 
     def create(self, validated_data):
-        return User.objects.create_user(**validated_data)
+        return User.objects.create_user(**validated_data) 
+
 
 
 class LoginSerializer(serializers.Serializer):

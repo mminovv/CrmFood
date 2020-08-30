@@ -7,7 +7,7 @@ from rest_framework import authentication, exceptions
 from user.models import User
 
 
-class JWTAuthentication(authentication.BaseAuthentication):
+class TokenAuthentication(authentication.BaseAuthentication):
     authentication_header_prefix = 'Token'
 
     def authenticate(self, request):
