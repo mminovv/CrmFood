@@ -1,6 +1,6 @@
 from django.urls import path
+from .views import UserRegistrationAPIView, login #LoginAPIView
 
-from .views import UserRegistrationAPIView, login
 
 app_name = 'user'
 

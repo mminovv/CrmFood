@@ -41,8 +41,6 @@ class UserRegistrationAPIView(APIView):
 #
 #    def post(self, request):
 #        user = request.data.get('user', {})
-#        #user = authenticate(username=email, password=password)
-#        token, created = Token.objects.get_or_create(user=user)
 #        serializer = self.serializer_class(data=user)
 #        serializer.is_valid(raise_exception=True)
 #
@@ -55,15 +53,17 @@ class UserRegistrationAPIView(APIView):
 
 def login(request):
 
-    email = request.data.get("email")
+    username = request.data.get("username")
     password = request.data.get("password")
-    print(email, password)
+    print(username, password)
 
-    if email is None or password is None:
+    if username is None or password is None:
         return Response({'error': 'Убедитесь в правильности вводимых данных'},
                         status=HTTP_400_BAD_REQUEST)
-    user = authenticate(username=email, password=password)
+    user = authenticate(username=username, password=password)
     if not user:
         return Response({'error': 'Убедитесь в правильности вводимых данных'},
                         status=HTTP_404_NOT_FOUND)
     token, created = Token.objects.get_or_create(user=user)
+    return Response({'token': token.key},
+                    status=HTTP_200_OK)
