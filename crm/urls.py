@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include 
 
 
 urlpatterns = [
@@ -8,7 +8,7 @@ urlpatterns = [
     #path('auth/', include('djoser.urls.authtoken')),
     path('auth/', include('djoser.urls.jwt')),
 
-	#path("", include("service.urls")),
-	path('lala/', include("user.urls")),
+	path("service/", include("service.urls")),
+	path('user/', include("user.urls")),
 ]
 

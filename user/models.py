@@ -6,7 +6,9 @@ from django.contrib.auth.models import (AbstractBaseUser,
                                         PermissionsMixin) 
 
 from django.db import models
-from service.models import Roles 
+
+import service.models
+
 
 import jwt
 
@@ -54,7 +56,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     password = models.CharField(max_length=120, blank=False)
     email = models.EmailField(max_length=120, unique=True)
-    #role = models.ForeignKey(Roles, on_delete=models.CASCADE, default='Admin')
+    role = models.ForeignKey("service.Roles", on_delete=models.CASCADE, default='Admin')
     phone = models.CharField(max_length=50)
     date = models.DateTimeField(auto_now_add=True, null=True)
 
