@@ -10,9 +10,9 @@ class Tables(models.Model):
 
 class Roles(models.Model):
     ROLE_CHOICES = [
-        ('Waiter', 'Waiter'),
-        ('Admin', 'Admin'),
-        ('Chef', 'Chef'),
+        (1, 'Waiter'),
+        (2, 'Admin'),
+        (3, 'Chef'),
     ]
     name = models.CharField(max_length=20, choices=ROLE_CHOICES)
 
@@ -65,8 +65,8 @@ class Orders(models.Model):
     status = models.ForeignKey(Statuses, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
 
-#    def get_total_cost(self):
-#        return sum(item.get_cost() for item in self.meals.all())
+    def get_total_cost(self):
+        return sum(item.get_cost() for item in self.meals.all())
 
 
 class Checks(models.Model):
@@ -74,8 +74,8 @@ class Checks(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     percentage = models.ForeignKey(ServicePercentage, on_delete=models.CASCADE)
 
-#    def get_total_sum(self):
-#        return self.order.get_total_cost() + self.percentage.percentage
+    def get_total_sum(self):
+        return self.order.get_total_cost() + self.percentage.percentage
 
 
 class MealToOrders(models.Model):
@@ -83,6 +83,6 @@ class MealToOrders(models.Model):
     meals = models.ForeignKey(Meals, on_delete=models.CASCADE)
     count = models.IntegerField()
 
-#    def get_cost(self):
-#        return self.meal.price * self.count
+    def get_cost(self):
+        return self.meal.price * self.count
 

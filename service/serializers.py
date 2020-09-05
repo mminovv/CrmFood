@@ -52,22 +52,22 @@ class MealSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'category', 'price', 'description']
 
 
-# class ChecksSerializer(serializers.ModelSerializer):
-#
-#	class Meta:
-#		model = Checks
-#		fields = ['id', 'order', 'date', 'percentage']
-#
-#
-# class OrderSerializer(serializers.ModelSerializer):
-#
-#	class Meta:
-#		model = Orders
-#		fields = ['id', 'waiter', 'table', 'status', 'date']
-#
-#
-# class MealToOrdersSerializer(serializers.ModelSerializer):
-#
-#	class Meta:
-#		model = MealToOrders
-#		fields = '__all__'
+class ChecksSerializer(serializers.ModelSerializer):
+    
+	class Meta:
+		model = Checks
+		fields = ['id', 'order', 'date', 'percentage']
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    
+	class Meta:
+		model = Orders
+		fields = ['id', 'waiter', 'table', 'status', 'date']
+
+
+class MealToOrdersSerializer(serializers.ModelSerializer):
+    
+	class Meta:
+		model = MealToOrders
+		fields = '__all__'

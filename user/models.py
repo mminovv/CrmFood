@@ -56,7 +56,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     password = models.CharField(max_length=120, blank=False)
     email = models.EmailField(max_length=120, unique=True)
-    role = models.ForeignKey("service.Roles", on_delete=models.CASCADE, default='Admin')
+    role = models.ForeignKey("service.Roles", on_delete=models.CASCADE, blank=True, null=True)
     phone = models.CharField(max_length=50)
     date = models.DateTimeField(auto_now_add=True, null=True)
 

@@ -24,7 +24,4 @@ urlpatterns = [
     
     path('meals/', MealsListView.as_view()),
     path('meals/<int:pk>', MealsRetriveView.as_view()),
-    
-    
-
 ]
