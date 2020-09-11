@@ -24,4 +24,14 @@ urlpatterns = [
     
     path('meals/', MealsListView.as_view()),
     path('meals/<int:pk>', MealsRetriveView.as_view()),
+
+    path('mealstoorder/', MealsToOrderListView.as_view()),
+    path('mealstoorder/<int:pk>', MealsToOrderRetriveView.as_view()),
+
+    path('order/', OrderListView.as_view()),
+    path('order/<int:pk>', OrderRetriveView.as_view()),
+
+    path('checks/', ChecksListView.as_view()),
+    path('checks/<int:pk>', ChecksRetriveView.as_view()),
+
 ]

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import *
-from user.models import User 
+from user.models import User
 
 
 class TableSerializer(serializers.ModelSerializer):
@@ -52,22 +52,27 @@ class MealSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'category', 'price', 'description']
 
 
-class ChecksSerializer(serializers.ModelSerializer):
-    
-	class Meta:
-		model = Checks
-		fields = ['id', 'order', 'date', 'percentage']
+class MealToOrdersSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(read_only=True)
+
+    class Meta:
+        model = MealToOrders
+        fields = ['id', 'name', 'count']
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    
-	class Meta:
-		model = Orders
-		fields = ['id', 'waiter', 'table', 'status', 'date']
+
+    class Meta:
+        model = Orders
+        fields = ['id', 'waiter', 'table', 'status', 'date', 'meals']
 
 
-class MealToOrdersSerializer(serializers.ModelSerializer):
-    
-	class Meta:
-		model = MealToOrders
-		fields = '__all__'
+class ChecksSerializer(serializers.ModelSerializer):
+    meals = MealToOrdersSerializer(read_only=True)
+    percentage = serializers.FloatField(
+        read_only=True, source='percentage.percentage')
+    totalsum = serializers.FloatField(source='get_totalsum', read_only=True)
+
+    class Meta:
+        model = Checks
+        fields = ['id', 'order', 'date', 'percentage', 'totalsum', 'meals']

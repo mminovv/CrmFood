@@ -58,31 +58,31 @@ class Meals(models.Model):
     def __str__(self):
         return self.name
 
+class MealToOrders(models.Model):
+    meals = models.ForeignKey(Meals, on_delete=models.CASCADE, default=1)
+    count = models.IntegerField()
+
 
 class Orders(models.Model):
     waiter = models.ForeignKey(User, on_delete=models.CASCADE)
     table = models.ForeignKey(Tables, on_delete=models.CASCADE)
     status = models.ForeignKey(Statuses, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
+    meals = models.ForeignKey(MealToOrders, on_delete=models.CASCADE, default=6)
+
 
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.meals.all())
 
 
+
+    def get_cost(self):
+        return self.meals.price * self.count
+
 class Checks(models.Model):
     order = models.ForeignKey(Orders, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
-    percentage = models.ForeignKey(ServicePercentage, on_delete=models.CASCADE)
+    percentage = models.ForeignKey(ServicePercentage, on_delete=models.CASCADE, default=1)
 
     def get_total_sum(self):
         return self.order.get_total_cost() + self.percentage.percentage
-
-
-class MealToOrders(models.Model):
-    order = models.ForeignKey(Orders, on_delete=models.CASCADE)
-    meals = models.ForeignKey(Meals, on_delete=models.CASCADE)
-    count = models.IntegerField()
-
-    def get_cost(self):
-        return self.meal.price * self.count
-

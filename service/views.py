@@ -89,3 +89,37 @@ class MealsRetriveView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = MealSerializer
     permission_classes = (IsAuthenticated,)
 
+
+class MealsToOrderListView(generics.ListCreateAPIView):
+    queryset = MealToOrders.objects.all()
+    serializer_class = MealToOrdersSerializer
+    permission_classes = (IsAuthenticated,)
+
+
+class MealsToOrderRetriveView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = MealToOrders.objects.all()
+    serializer_class = MealToOrdersSerializer
+    permission_classes = (IsAuthenticated,)
+
+class OrderListView(generics.ListCreateAPIView):
+    queryset = Orders.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = (IsAuthenticated,)
+
+
+class OrderRetriveView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Orders.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = (IsAuthenticated,)
+
+
+class ChecksListView(generics.ListCreateAPIView):
+    queryset = Checks.objects.all()
+    serializer_class = ChecksSerializer
+    permission_classes = (IsAuthenticated,)
+
+
+class ChecksRetriveView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Checks.objects.all()
+    serializer_class = ChecksSerializer
+    permission_classes = (IsAuthenticated,)
