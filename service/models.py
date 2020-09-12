@@ -72,8 +72,7 @@ class Orders(models.Model):
 
 
     def get_total_cost(self):
-        return sum(item.get_cost() for item in self.meals.all())
-
+        return sum(item.get_cost() for item in MealToOrders.objects.all())
 
 
     def get_cost(self):
@@ -83,6 +82,8 @@ class Checks(models.Model):
     order = models.ForeignKey(Orders, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
     percentage = models.ForeignKey(ServicePercentage, on_delete=models.CASCADE, default=1)
-
+    
+    @property
     def get_total_sum(self):
-        return self.order.get_total_cost() + self.percentage.percentage
+        qs = self.orders.get_total_cost.objects.annotate(totalsum=Sum('totalsum')) + self.percentage.percentage
+        return qs['totalsum']

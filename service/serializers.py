@@ -65,14 +65,29 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Orders
         fields = ['id', 'waiter', 'table', 'status', 'date', 'meals']
+    
+    def create(self, validated_data):
+        meals = validated_data.pop('meals')
+        instance = Orders.objects.create(**validated_data)
+        for meal in meals:
+            instance.meals.add(meal)
+
+        return instance
 
 
 class ChecksSerializer(serializers.ModelSerializer):
-    meals = MealToOrdersSerializer(read_only=True)
-    percentage = serializers.FloatField(
-        read_only=True, source='percentage.percentage')
-    totalsum = serializers.FloatField(source='get_totalsum', read_only=True)
+    #meals = MealToOrdersSerializer(many=True)
+    percentage = serializers.CharField(read_only=True, source='percentage.percentage')
+    #totalsum = serializers.CharField(source='get_totalsum', read_only=True)
 
     class Meta:
-        model = Checks
-        fields = ['id', 'order', 'date', 'percentage', 'totalsum', 'meals']
+        model = Checks 
+        fields = ['id', 'order', 'date', 'percentage', 'totalsum']
+
+    def create(self, validated_data):
+        check = Checks.objects.create(
+            percentage=ServicePercentage.objects.all()[0]
+        )
+        check.save()
+
+        return check        

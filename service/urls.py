@@ -10,7 +10,7 @@ urlpatterns = [
     path('roles/', RoleListView.as_view()),
     path('roles/<int:pk>', RoleRetrieveView.as_view()),    
 
-    path('departments/', DepartmentsListView.as_view()),
+    path('DepartmentsListView/', DepartmentsListView.as_view()),
     path('departments/<int:pk>', DepartmentRetrieveView.as_view()),
     
     path('status/', StatusListView.as_view()),
